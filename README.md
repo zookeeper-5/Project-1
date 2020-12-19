@@ -11,93 +11,93 @@ In the Diagrams folder
 
 These files have been tested and used to generate a live ELK deployment on Azure. They can be used to either recreate the entire deployment pictured above. Alternatively, select portions of the YAML file may be used to install only certain pieces of it, such as Filebeat.
 
-  - Enter the playbook file._
+Â Â - Enter the playbook file._
 
 ---
 - name: Config Web VM with Docker
-  hosts: webservers
-  become: true
-  tasks:
-    - name: docker.io
-      apt:
-        update_cache: yes
-        name: docker.io
-        state: present
+Â Â hosts: webservers
+Â Â become: true
+Â Â tasks:
+Â Â Â Â - name: docker.io
+Â Â Â Â Â Â apt:
+Â Â Â Â Â Â Â Â update_cache: yes
+Â Â Â Â Â Â Â Â name: docker.io
+Â Â Â Â Â Â Â Â state: present
 
-    - name: Install pip3
-      apt:
-        name: python3-pip
-        state: present
+Â Â Â Â - name: Install pip3
+Â Â Â Â Â Â apt:
+Â Â Â Â Â Â Â Â name: python3-pip
+Â Â Â Â Â Â Â Â state: present
 
-    - name: Install Docker python module
-      pip:
-        name: docker
-        state: present
+Â Â Â Â - name: Install Docker python module
+Â Â Â Â Â Â pip:
+Â Â Â Â Â Â Â Â name: docker
+Â Â Â Â Â Â Â Â state: present
 
-    - name: download and launch a docker web container
-      docker_container:
-        name: dvwa
-        image: cyberxsecurity/dvwa
-        state: started
-        restart_policy: always
-        published_ports: 80:80
+Â Â Â Â - name: download and launch a docker web container
+Â Â Â Â Â Â docker_container:
+Â Â Â Â Â Â Â Â name: dvwa
+Â Â Â Â Â Â Â Â image: cyberxsecurity/dvwa
+Â Â Â Â Â Â Â Â state: started
+Â Â Â Â Â Â Â Â restart_policy: always
+Â Â Â Â Â Â Â Â published_ports: 80:80
 
-    - name: Enable docker service
-      systemd:
-        name: docker
-        enabled: yes
+Â Â Â Â - name: Enable docker service
+Â Â Â Â Â Â systemd:
+Â Â Â Â Â Â Â Â name: docker
+Â Â Â Â Â Â Â Â enabled: yes
 
 
 
 ---
 - name: Config ELK_VM_01 with Docker
-  hosts: elk
-#  remote_user: elk
-  become: true
-  tasks:
-    - name: docker.io
-      apt:
-        update_cache: yes
-        name: docker.io
-        state: present
+Â Â hosts: elk
+#Â  remote_user: elk
+Â Â become: true
+Â Â tasks:
+Â Â Â Â - name: docker.io
+Â Â Â Â Â Â apt:
+Â Â Â Â Â Â Â Â update_cache: yes
+Â Â Â Â Â Â Â Â name: docker.io
+Â Â Â Â Â Â Â Â state: present
 
-    - name: Install python3_pip
-      apt:
-        force_apt_get: yes
-        name: python3-pip
-        state: present
+Â Â Â Â - name: Install python3_pip
+Â Â Â Â Â Â apt:
+Â Â Â Â Â Â Â Â force_apt_get: yes
+Â Â Â Â Â Â Â Â name: python3-pip
+Â Â Â Â Â Â Â Â state: present
 
-    - name: Install Docker python module
-      pip:
-        name: docker
-        state: present
+Â Â Â Â - name: Install Docker python module
+Â Â Â Â Â Â pip:
+Â Â Â Â Â Â Â Â name: docker
+Â Â Â Â Â Â Â Â state: present
 
-    - name: Enable docker service
-      systemd:
-        name: docker
-        enabled: yes
+Â Â Â Â - name: Enable docker service
+Â Â Â Â Â Â systemd:
+Â Â Â Â Â Â Â Â name: docker
+Â Â Â Â Â Â Â Â enabled: yes
 
-#    - name: Increase virtual memory
-#     command: sysctl -w vm.max_map_count=262144
+#Â  Â  - name: Increase virtual memory
+# Â  Â  command: sysctl -w vm.max_map_count=262144
 
-    - name: Use more memory
-      sysctl:
-        name: vm.max_map_count
-        value: '262144'
-        state: present
-        reload: yes
+Â Â Â Â - name: Use more memory
+Â Â Â Â Â Â sysctl:
+Â Â Â Â Â Â Â Â name: vm.max_map_count
+Â Â Â Â Â Â Â Â value: '262144'
+Â Â Â Â Â Â Â Â state: present
+Â Â Â Â Â Â Â Â reload: yes
 
-    - name: download and launch a docker elk container
-      docker_container:
-        name: elk
-        image: sebp/elk:761
-        state: started
-        restart_policy: always
-        # Please list the ports that ELK runs on
-        published_ports:
-          -  5601:5601
-          -  9200:9200
-          -  5044:5044
+Â Â Â Â - name: download and launch a docker elk container
+Â Â Â Â Â Â docker_container:
+Â Â Â Â Â Â Â Â name: elk
+Â Â Â Â Â Â Â Â image: sebp/elk:761
+Â Â Â Â Â Â Â Â state: started
+Â Â Â Â Â Â Â Â restart_policy: always
+Â Â Â Â Â Â Â Â # Please list the ports that ELK runs on
+Â Â Â Â Â Â Â Â published_ports:
+Â Â Â Â Â Â Â Â Â Â -Â  5601:5601
+Â Â Â Â Â Â Â Â Â Â -Â  9200:9200
+Â Â Â Â Â Â Â Â Â Â -Â  5044:5044
 
 
 
@@ -105,30 +105,30 @@ These files have been tested and used to generate a live ELK deployment on Azure
 
 ---
 - name: installing and launching filebeat
-  hosts: webservers
-  become: yes
-  tasks:
+Â Â hosts: webservers
+Â Â become: yes
+Â Â tasks:
 
-  - name: download filebeat deb
-    command: curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.4.0-amd64.deb
+Â Â - name: download filebeat deb
+Â Â Â Â command: curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.4.0-amd64.deb
 
-  - name: install filebeat deb
-    command: dpkg -i filebeat-7.4.0-amd64.deb
+Â Â - name: install filebeat deb
+Â Â Â Â command: dpkg -i filebeat-7.4.0-amd64.deb
 
-  - name: drop in filebeat.yml
-    copy:
-      src: /etc/ansible/filebeat-config.yml
-      dest: /etc/filebeat/filebeat.yml
+Â Â - name: drop in filebeat.yml
+Â Â Â Â copy:
+Â Â Â Â Â Â src: /etc/ansible/filebeat-config.yml
+Â Â Â Â Â Â dest: /etc/filebeat/filebeat.yml
 
-  - name: enable and configure system module
-    command: filebeat modules enable system
-    command:
+Â Â - name: enable and configure system module
+Â Â Â Â command: filebeat modules enable system
+Â Â Â Â command:
 
-  - name: setup filebeat
-    command: filebeat setup
+Â Â - name: setup filebeat
+Â Â Â Â command: filebeat setup
 
-  - name: start filebeat service
-    command: service filebeat start
+Â Â - name: start filebeat service
+Â Â Â Â command: service filebeat start
 
 
 
@@ -136,8 +136,8 @@ This document contains the following details:
 - Description of the Topology
 - Access Policies
 - ELK Configuration
-  - Beats in Use
-  - Machines Being Monitored
+Â Â - Beats in Use
+Â Â - Machines Being Monitored
 - How to Use the Ansible Build
 
 ### Description of the Topology
@@ -145,7 +145,7 @@ This document contains the following details:
 The main purpose of this network is to expose a load-balanced and monitored instance of DVWA, the D*mn Vulnerable Web Application.
 
 Load balancing ensures that the application will be highly available, in addition to restricting access to the network.
-- What aspect of security do load balancers protect? Availability. What is the advantage of a jump box? It is a highly secure computer that is never used for non-administrative tasks. It sits in front of the VMs on the network. It controls access to the other machines. 
+- What aspect of security do load balancers protect? Availability. What is the advantage of a jump box? It is a highly secure computer that is never used for non-administrative tasks. It sits in front of the VMs on the network. It controls access to the other machines.Â 
 
 Integrating an ELK server allows users to easily monitor the vulnerable VMs for changes to the logs and system traffic.
 - What does Filebeat watch for? Log files
@@ -156,11 +156,11 @@ _Note: Use the [Markdown Table Generator](http://www.tablesgenerator.com/markdow
 
 | Name 	| Function | IP Address | Operating System |
 |----------|----------|------------|------------------|
-| Jump Box | Gateway  | 10.0.0.1   | Linux            |
-| Web1 	|Web Server| 10.0.0.7   | Linux            |
-| Web2 	|Web Server| 10.0.0.8   | Linux            |
-| Web3 	|Web Server| 10.0.0.10  | Linux            |
-| Elk01	|Monitoring| 10.1.0.4	  | Linux		     |		
+| Jump Box | GatewayÂ  | 10.0.0.1 Â  | LinuxÂ  Â  Â  Â  Â  Â  |
+| Web1 	|Web Server| 10.0.0.7 Â  | LinuxÂ  Â  Â  Â  Â  Â     |
+| Web2 	|Web Server| 10.0.0.8 Â  | LinuxÂ  Â  Â  Â  Â  Â  |
+| Web3 	|Web Server| 10.0.0.10Â  | LinuxÂ  Â  Â  Â  Â  Â  |
+| Elk01	|Monitoring| 10.1.0.4	Â  | Linux		 Â  Â  |		
 ### Access Policies
 
 The machines on the internal network are not exposed to the public Internet.
@@ -171,22 +171,22 @@ Only the jump box machine can accept connections from the Internet. Access to th
 
 Machines within the network can only be accessed by ssh.
 - Which machine did you allow to access your ELK VM? What was its IP address?_
-The jump box. From private IP- 10.0.0.1 
+The jump box. From private IP- 10.0.0.1Â 
 A summary of the access policies in place can be found in the table below.
 
-| Name     	| Publicly Accessible 	| Allowed IP Addresses 	|
+| Name Â  Â  	| Publicly Accessible 	| Allowed IP Addresses 	|
 |----------	|---------------------	|----------------------	|
-| Jump Box 	| Yes                 	| 107.77.209.220       	|
-| Web1     	| No                  	| 10.0.0.1             	|
-| Web2     	| No                  	| 10.0.0.1             	|
-| Web3     	| No                  	| 10.0.0.1             	|
-| Elk01    	| No                  	| 10.0.0.1             	|
+| Jump Box 	| Yes Â  Â  Â  Â  Â  Â  Â  Â  	| 107.77.209.220 Â  Â  Â  	|
+| Web1 Â  Â  	| NoÂ  Â  Â  Â  Â  Â  Â  Â  Â  	| 10.0.0.1 Â  Â  Â  Â  Â  Â  	|
+| Web2 Â  Â  	| NoÂ  Â  Â  Â  Â  Â  Â  Â  Â  	| 10.0.0.1 Â  Â  Â  Â  Â  Â  	|
+| Web3 Â  Â  	| NoÂ  Â  Â  Â  Â  Â  Â  Â  Â  	| 10.0.0.1 Â  Â  Â  Â  Â  Â  	|
+| Elk01Â  Â  	| NoÂ  Â  Â  Â  Â  Â  Â  Â  Â  	| 10.0.0.1 Â  Â  Â  Â  Â  Â  	|
 
 
 ### Elk Configuration
 
 Ansible was used to automate configuration of the ELK machine. No configuration was performed manually, which is advantageous because...
-- What is the main advantage of automating configuration with Ansible? You don’t need to install any other software. It is very easy to do. You can configure more than one machine at a time.
+- What is the main advantage of automating configuration with Ansible? You donâ€™t need to install any other software. It is very easy to do. You can configure more than one machine at a time.
 
 The playbook implements the following tasks:
 - In 3-5 bullets, explain the steps of the ELK installation play. E.g., install Docker; download image; etc._
